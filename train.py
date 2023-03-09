@@ -17,6 +17,11 @@ USERPATH = '/Users/henrypulley/Desktop/Umbrella/Academics and Career/Academics/S
 
 def _main():
     annotation_path = USERPATH + 'train.txt'
+
+    #*****
+    #validation_path = SET PATH
+    #*****
+
     log_dir = 'logs/000/'
     classes_path = USERPATH + 'model_data/mars_classes.txt'
     anchors_path = USERPATH + 'model_data/yolo_anchors.txt'
@@ -35,14 +40,20 @@ def _main():
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, verbose=1)
     early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1)
 
-    val_split = 0.1
     with open(annotation_path) as f:
-        lines = f.readlines()
+        linesT = f.readlines()
     np.random.seed(10101)
-    np.random.shuffle(lines)
-    np.random.seed(None)
-    num_val = int(len(lines)*val_split)
-    num_train = len(lines) - num_val
+    np.random.shuffle(linesT)
+    # np.random.seed(None)
+    num_train = len(linesT)
+
+    #add
+    with open(validation_path) as f:
+        linesV = f.readlines()
+    np.random.seed(10101)
+    np.random.shuffle(linesV)
+    # np.random.seed(None)
+    num_val = len(linesV)
 
     # Train with frozen layers first, to get a stable loss.
     # Adjust num epochs to your dataset. This step is enough to obtain a not bad model.
