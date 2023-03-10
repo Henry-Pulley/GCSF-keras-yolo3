@@ -64,9 +64,9 @@ def _main():
 
         batch_size = 32
         print('Train on {} samples, val on {} samples, with batch size {}.'.format(num_train, num_val, batch_size))
-        model.fit_generator(data_generator_wrapper(lines[:num_train], batch_size, input_shape, anchors, num_classes),
+        model.fit_generator(data_generator_wrapper(linesT, batch_size, input_shape, anchors, num_classes),
                 steps_per_epoch=max(1, num_train//batch_size),
-                validation_data=data_generator_wrapper(lines[num_train:], batch_size, input_shape, anchors, num_classes),
+                validation_data=data_generator_wrapper(linesV, batch_size, input_shape, anchors, num_classes),
                 validation_steps=max(1, num_val//batch_size),
                 epochs=50,
                 initial_epoch=0,
@@ -83,9 +83,9 @@ def _main():
 
         batch_size = 32 # note that more GPU memory is required after unfreezing the body
         print('Train on {} samples, val on {} samples, with batch size {}.'.format(num_train, num_val, batch_size))
-        model.fit_generator(data_generator_wrapper(lines[:num_train], batch_size, input_shape, anchors, num_classes),
+        model.fit_generator(data_generator_wrapper(linesT, batch_size, input_shape, anchors, num_classes),
             steps_per_epoch=max(1, num_train//batch_size),
-            validation_data=data_generator_wrapper(lines[num_train:], batch_size, input_shape, anchors, num_classes),
+            validation_data=data_generator_wrapper(linesV, batch_size, input_shape, anchors, num_classes),
             validation_steps=max(1, num_val//batch_size),
             epochs=100,
             initial_epoch=50,
